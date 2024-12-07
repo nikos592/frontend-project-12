@@ -4,7 +4,10 @@
   "description": "Slack project",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm test"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd frontend && npm ci"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/nikos592/frontend-project-12/issues"
   },
-  "homepage": "https://github.com/nikos592/frontend-project-12#readme"
+  "homepage": "https://github.com/nikos592/frontend-project-12#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.3"
+  }
 }
