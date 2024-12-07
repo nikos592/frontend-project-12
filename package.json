@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Slack project",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikos592/frontend-project-12.git"
+  },
+  "author": "nikos592",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikos592/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/nikos592/frontend-project-12#readme"
+}
