@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Diploma Project. Simplified version of Slack chat.",
+  "description": "Hexlet project 4",
   "main": "./src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
@@ -13,13 +13,13 @@
     "type": "git",
     "url": "git+https://github.com/NadyKamenskaya/frontend-project-12.git"
   },
-  "author": "Nady Kamenskaya",
+  "author": "nikos592",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NadyKamenskaya/frontend-project-12/issues"
+    "url": "https://github.com/nikos592/frontend-project-12/issues"
   },
   "type": "module",
-  "homepage": "https://github.com/NadyKamenskaya/frontend-project-12#readme",
+  "homepage": "https://github.com/nikos592/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6"
   }
