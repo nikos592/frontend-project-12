@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { io } from 'socket.io-client';
 import init from './init.js';
 
-const app = async () => {
+const run = async () => {
   const root = ReactDOM.createRoot(document.getElementById('chat'));
   const socket = io();
   const app = await init(socket);
@@ -16,4 +16,4 @@ const app = async () => {
   );
 };
 
-app();
+run();
