@@ -1,25 +1,26 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Slack project",
-  "main": "src/index.js",
+  "description": "Diploma Project. Simplified version of Slack chat.",
+  "main": "./src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "npx start-server -s ./build",
+    "start": "start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm ci --prefix frontend"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nikos592/frontend-project-12.git"
+    "url": "git+https://github.com/NadyKamenskaya/frontend-project-12.git"
   },
-  "author": "nikos592",
+  "author": "Nady Kamenskaya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nikos592/frontend-project-12/issues"
+    "url": "https://github.com/NadyKamenskaya/frontend-project-12/issues"
   },
-  "homepage": "https://github.com/nikos592/frontend-project-12#readme",
+  "type": "module",
+  "homepage": "https://github.com/NadyKamenskaya/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^1.1.6"
   }
 }
