@@ -9,7 +9,7 @@ lint-frontend:
 install:
 	npm ci
 
-start-frontend:
+build:
 	make -C frontend start
 
 start-backend:
