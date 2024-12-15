@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NadyKamenskaya/frontend-project-12.git"
+    "url": "git+https://github.com/nikos592/frontend-project-12.git"
   },
   "author": "nikos592",
   "license": "ISC",
@@ -21,6 +21,6 @@
   "type": "module",
   "homepage": "https://github.com/nikos592/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.9"
+    "@hexlet/chat-server": "^2.0.4"
   }
 }
