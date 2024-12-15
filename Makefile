@@ -13,6 +13,6 @@ start-backend:
 deploy:
 	git push heroku main
 
-start:
+build:
 	make start-backend & make start-frontend
 
