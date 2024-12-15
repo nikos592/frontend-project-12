@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Hexlet project 4",
   "main": "./src/index.js",
-  "scripts": {
+"scripts": {
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,5 +22,8 @@
   "homepage": "https://github.com/nikos592/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
