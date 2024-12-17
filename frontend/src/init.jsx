@@ -11,6 +11,7 @@ import AuthProvider from './providers/AuthProvider.jsx';
 import ApiProvider from './providers/ApiProvider.jsx';
 
 import App from './components/App.jsx';
+import 'react-toastify/dist/ReactToastify.css';
 
 const init = async (socket) => {
   const rollbarConfig = {
