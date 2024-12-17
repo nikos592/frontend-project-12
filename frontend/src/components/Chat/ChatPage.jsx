@@ -15,7 +15,7 @@ import { customSelectors as messagesSelectors } from '../../slices/messagesSlice
 
 import Channels from './components/Channels';
 import Messages from './components/Messages.jsx';
-import Modal from '../common/Modal/index.js';
+import Modal from '../common/Modal/index.jsx';
 
 const handleUpdate = (navigate) => () => {
   navigate(0);
