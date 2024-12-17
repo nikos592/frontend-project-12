@@ -13,7 +13,7 @@ import { selectors as loadingStateSelectors, stateLoad } from '../../slices/load
 import { customSelectors as channelsSelectors } from '../../slices/channelsSlice.js';
 import { customSelectors as messagesSelectors } from '../../slices/messagesSlice.js';
 
-import Channels from './components/Channels.jsx';
+import Channels from './components/Channels';
 import Messages from './components/Messages.jsx';
 import Modal from '../common/Modal/index.jsx';
 
