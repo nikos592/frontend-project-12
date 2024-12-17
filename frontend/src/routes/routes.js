@@ -10,7 +10,8 @@ const routes = {
 const apiRoutes = {
   loginPath: () => [apiPath, 'login'].join('/'),
   signupPath: () => [apiPath, 'signup'].join('/'),
-  dataPath: () => [apiPath, 'data'].join('/'),
+  messagesPath: () => [apiPath, 'messages'].join('/'), // Новый путь для сообщений
+  channelsPath: () => [apiPath, 'channels'].join('/'), // Новый путь для каналов
 };
 
 export { routes, apiRoutes };
