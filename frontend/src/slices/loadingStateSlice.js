@@ -22,14 +22,21 @@ const loadingStateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.pending, () => stateLoad.load)
-      .addCase(fetchData.fulfilled, () => stateLoad.success)
-      .addCase(fetchData.rejected, (_state, action) => {
-        if (action.payload === 401) {
-          return stateLoad.error;
+      .addCase(fetchData.pending, (state) => {
+        console.log('Pending:', state);
+        return { ...state, status: stateLoad.load };
+      })
+      .addCase(fetchData.fulfilled, (state) => {
+        console.log('Fulfilled:', state);
+        return { ...state, status: stateLoad.success };
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        console.log('Rejected:', state, action);
+        if (action.payload?.status === 401) {
+          return { ...state, status: stateLoad.error };
         }
 
-        return stateLoad.fail;
+        return { ...state, status: stateLoad.fail };
       });
   },
 });
@@ -37,7 +44,7 @@ const loadingStateSlice = createSlice({
 const { actions } = loadingStateSlice;
 
 const selectors = {
-  getStatus: (state) => state.loadingState,
+  getStatus: (state) => state.loadingState.status,
 };
 
 export { actions, selectors };
