@@ -8,10 +8,12 @@ const routes = {
 };
 
 const apiRoutes = {
-  loginPath: () => [apiPath, 'login'].join('/'),
-  signupPath: () => [apiPath, 'signup'].join('/'),
-  messagesPath: () => [apiPath, 'messages'].join('/'), // Новый путь для сообщений
-  channelsPath: () => [apiPath, 'channels'].join('/'), // Новый путь для каналов
+  loginPath: () => `${apiPath}/login`,
+  signupPath: () => `${apiPath}/signup`,
+  channelsPath: () => `${apiPath}/channels`,
+  channelPath: (id) => `${apiPath}/channels/${id}`,
+  messagesPath: () => `${apiPath}/messages`,
+  messagePath: (id) => `${apiPath}/messages/${id}`,
 };
 
 export { routes, apiRoutes };
