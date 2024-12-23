@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import fetchData from './fetchData.js';
+import { fetchChannels, fetchMessages } from './fetchData.js'; // Импортируем конкретные функции
 
 export const stateLoad = {
   error: 'error',
@@ -22,15 +21,31 @@ const loadingStateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.pending, (state) => {
+      .addCase(fetchChannels.pending, (state) => {
         console.log('Pending:', state);
         return { ...state, status: stateLoad.load };
       })
-      .addCase(fetchData.fulfilled, (state) => {
+      .addCase(fetchChannels.fulfilled, (state) => {
         console.log('Fulfilled:', state);
         return { ...state, status: stateLoad.success };
       })
-      .addCase(fetchData.rejected, (state, action) => {
+      .addCase(fetchChannels.rejected, (state, action) => {
+        console.log('Rejected:', state, action);
+        if (action.payload?.status === 401) {
+          return { ...state, status: stateLoad.error };
+        }
+
+        return { ...state, status: stateLoad.fail };
+      })
+      .addCase(fetchMessages.pending, (state) => {
+        console.log('Pending:', state);
+        return { ...state, status: stateLoad.load };
+      })
+      .addCase(fetchMessages.fulfilled, (state) => {
+        console.log('Fulfilled:', state);
+        return { ...state, status: stateLoad.success };
+      })
+      .addCase(fetchMessages.rejected, (state, action) => {
         console.log('Rejected:', state, action);
         if (action.payload?.status === 401) {
           return { ...state, status: stateLoad.error };
