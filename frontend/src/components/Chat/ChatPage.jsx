@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '../../hooks/index.jsx';
 
-import fetchData from '../../slices/fetchData.js';
+import { fetchChannels, fetchMessages } from '../../slices/fetchData.js';
 import { selectors as loadingStateSelectors, stateLoad } from '../../slices/loadingStateSlice.js';
 import { customSelectors as channelsSelectors } from '../../slices/channelsSlice.js';
 import { customSelectors as messagesSelectors } from '../../slices/messagesSlice.js';
@@ -55,7 +55,7 @@ const Content = () => {
     case stateLoad.success:
       return (
         <>
-          <Channels channels={channels} currentChannelId={currentChannel.id} />
+          <Channels channels={channels} currentChannelId={currentChannel?.id} />
           <Messages channel={currentChannel} messages={currentChannelMessages} />
         </>
       );
@@ -75,7 +75,8 @@ const ChatPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchData(getAuthHeader()));
+    dispatch(fetchChannels(getAuthHeader())); // Отправляем запрос на получение каналов
+    dispatch(fetchMessages(getAuthHeader())); // Отправляем запрос на получение сообщений
   }, [dispatch, getAuthHeader]);
 
   const loadingState = useSelector(loadingStateSelectors.getStatus);
