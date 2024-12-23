@@ -2,7 +2,7 @@
 
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import fetchData from './fetchData.js';
+import { fetchChannels } from './fetchData.js'; // Импортируем новый асинхронный thunk
 
 const channelsAdapter = createEntityAdapter();
 
@@ -30,9 +30,9 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, { payload }) => {
-        channelsAdapter.setAll(state, payload.channels);
-        state.currentChannelId = payload.currentChannelId;
+      .addCase(fetchChannels.fulfilled, (state, { payload }) => {
+        channelsAdapter.setAll(state, payload); // Обновляем каналы
+        state.currentChannelId = payload.length > 0 ? payload[0].id : null; // Устанавливаем первый канал активным
       });
   },
 });
