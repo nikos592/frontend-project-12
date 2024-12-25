@@ -1,49 +1,87 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import { ApiContext } from '../contexts/index.jsx';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 
-const ApiProvider = ({ socket, children }) => {
+const ApiProvider = ({ token, children }) => {
   const dispatch = useDispatch();
 
-  socket.on('newMessage', (message) => {
-    dispatch(messagesActions.addMessage(message));
-  });
-  socket.on('newChannel', (channel) => {
-    dispatch(channelsActions.addChannel(channel));
-  });
-  socket.on('renameChannel', ({ id, name }) => {
-    dispatch(channelsActions.renameChannel({ id, changes: { name } }));
-  });
-  socket.on('removeChannel', ({ id }) => {
-    dispatch(channelsActions.removeChannel(id));
-  });
-
   const addMessage = async (body, channelId, username) => {
-    await socket.emit('newMessage', { body, channelId, username });
+    try {
+      const response = await axios.post('/api/v1/messages', {
+        body,
+        channelId,
+        username,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      dispatch(messagesActions.addMessage(response.data));
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const addChannel = async (values) => {
-    const { data } = await socket.emitWithAck('newChannel', values);
-    dispatch(channelsActions.addChannel(data));
-    dispatch(channelsActions.changeChannel(data.id));
+  const addChannel = async (name) => {
+    try {
+      const response = await axios.post('/api/v1/channels', {
+        name,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      dispatch(channelsActions.addChannel(response.data));
+      dispatch(channelsActions.changeChannel(response.data.id));
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const renameChannel = async (id, name) => {
-    await socket.emit('renameChannel', { id, name });
+    try {
+      const response = await axios.patch(`/api/v1/channels/${id}`, {
+        name,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      dispatch(channelsActions.renameChannel({ id, changes: { name } }));
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const removeChannel = async (id) => {
-    await socket.emit('removeChannel', { id });
+    try {
+      const response = await axios.delete(`/api/v1/channels/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      dispatch(channelsActions.removeChannel(id));
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
     <ApiContext.Provider value={{
       addChannel, addMessage, renameChannel, removeChannel,
-    }}
-    >
+    }}>
       {children}
     </ApiContext.Provider>
   );
