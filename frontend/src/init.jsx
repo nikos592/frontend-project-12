@@ -15,7 +15,7 @@ import SignUpPage from './components/SignUp/SignUpPage.jsx';
 import ChatPage from './components/Chat/ChatPage.jsx';
 import NotFoundPage from './components/NotFound/NotFoundPage.jsx';
 
-import Nav from './common/Nav.jsx';
+import Nav from './components/common/Nav.jsx';
 
 const App = () => (
   <>
