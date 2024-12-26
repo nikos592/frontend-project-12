@@ -6,9 +6,9 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import ChatRoute from '../routes/ChatRoute.jsx';
-import MainRoute from '../routes/MainRoute.jsx';
-import { routes } from '../routes/routes.js';
+import ChatRoute from './routes/ChatRoute.jsx';
+import MainRoute from './routes/MainRoute.jsx';
+import { routes } from './routes/routes.js';
 
 import LoginPage from './Login/LoginPage.jsx';
 import SignUpPage from './SignUp/SignUpPage.jsx';
