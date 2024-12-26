@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { ApiContext } from '../contexts/index.jsx';
+import { AuthContext } from '../contexts/index.jsx'; 
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 
-const ApiProvider = ({ token, children }) => {
+const ApiProvider = ({ children }) => {
+  const { getAuthHeader } = useContext(AuthContext); 
+  const headers = getAuthHeader(); 
+  const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null; 
+
   const dispatch = useDispatch();
 
   const addMessage = async (body, channelId, username) => {
