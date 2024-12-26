@@ -36,7 +36,7 @@ const init = async () => {
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <AuthProvider>
-              <ApiProvider> 
+              <ApiProvider  token={token}> 
                 <App />
               </ApiProvider>
             </AuthProvider>
