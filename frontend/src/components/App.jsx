@@ -19,15 +19,16 @@ import Nav from './common/Nav.jsx';
 import { AuthContext } from '../contexts/index.jsx';
 
 const App = () => {
-  const { getAuthHeader } = useContext(AuthContext);
+  const { getAuthHeader, saveAuthHeaders } = useContext(AuthContext);
 
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
     
-    // Здесь можно выполнять дальнейшие операции с токеном
-    console.log(token);
-  }, [getAuthHeader]);
+    if (token) {
+      saveAuthHeaders({ Authorization: `Bearer ${token}` }); 
+    }
+  }, [getAuthHeader, saveAuthHeaders]);
 
   return (
     <>
