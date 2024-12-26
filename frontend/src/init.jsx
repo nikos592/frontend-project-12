@@ -2,6 +2,7 @@ import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { useContext } from 'react';
 
 import resources from './locales/index.js';
 import store from './slices/index.js';
@@ -9,6 +10,13 @@ import AuthProvider from './providers/AuthProvider.jsx';
 import ApiProvider from './providers/ApiProvider.jsx';
 import App from './components/App.jsx';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../contexts/index.jsx';
+
+const getTokenFromContext = () => {
+  const { getAuthHeader } = useContext(AuthContext);
+  const headers = getAuthHeader();
+  return headers.Authorization.split(' ')[1];
+};
 
 const init = async () => {
   const rollbarConfig = {
@@ -28,7 +36,7 @@ const init = async () => {
     fallbackLng: 'ru',
   });
 
-  const token = store.getState().authentication.token;
+  const token = getTokenFromContext();
 
   return (
     <RollbarProvider config={rollbarConfig}>
