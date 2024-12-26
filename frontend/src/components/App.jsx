@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,37 +16,50 @@ import ChatPage from './Chat/ChatPage.jsx';
 import NotFoundPage from './NotFound/NotFoundPage.jsx';
 
 import Nav from './common/Nav.jsx';
+import { AuthContext } from '../contexts/index.jsx';
 
-const App = () => (
-  <>
-    <div className="d-flex flex-column h-100">
-      <Router>
-        <Nav />
-        <Routes>
-          <Route path={routes.notFoundPage()} element={<NotFoundPage />} />
-          <Route element={<MainRoute />}>
-            <Route path={routes.loginPage()} element={<LoginPage />} />
-            <Route path={routes.signUpPage()} element={<SignUpPage />} />
-          </Route>
-          <Route element={<ChatRoute />}>
-            <Route path={routes.chatPage()} element={<ChatPage />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
-    <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
-    />
-  </>
-);
+const App = () => {
+  const { getAuthHeader } = useContext(AuthContext);
+
+  useEffect(() => {
+    const headers = getAuthHeader();
+    const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
+    
+    // Здесь можно выполнять дальнейшие операции с токеном
+    console.log(token);
+  }, [getAuthHeader]);
+
+  return (
+    <>
+      <div className="d-flex flex-column h-100">
+        <Router>
+          <Nav />
+          <Routes>
+            <Route path={routes.notFoundPage()} element={<NotFoundPage />} />
+            <Route element={<MainRoute />}>
+              <Route path={routes.loginPage()} element={<LoginPage />} />
+              <Route path={routes.signUpPage()} element={<SignUpPage />} />
+            </Route>
+            <Route element={<ChatRoute />}>
+              <Route path={routes.chatPage()} element={<ChatPage />} />
+            </Route>
+          </Routes>
+        </Router>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  );
+};
 
 export default App;
