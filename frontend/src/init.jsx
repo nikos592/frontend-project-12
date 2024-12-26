@@ -1,58 +1,52 @@
-import { Provider } from 'react-redux';
-import i18next from 'i18next';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import { useContext } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import resources from './locales/index.js';
-import store from './slices/index.js';
-import AuthProvider from './providers/AuthProvider.jsx';
-import ApiProvider from './providers/ApiProvider.jsx';
-import App from './components/App.jsx';
-import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from './contexts/index.jsx';
+import ChatRoute from '../routes/ChatRoute.jsx';
+import MainRoute from '../routes/MainRoute.jsx';
+import { routes } from '../routes/routes.js';
 
-const getTokenFromContext = () => {
-  const { getAuthHeader } = useContext(AuthContext);
-  const headers = getAuthHeader();
-  return headers.Authorization.split(' ')[1];
-};
+import LoginPage from './Login/LoginPage.jsx';
+import SignUpPage from './SignUp/SignUpPage.jsx';
+import ChatPage from './Chat/ChatPage.jsx';
+import NotFoundPage from './NotFound/NotFoundPage.jsx';
 
-const init = async () => {
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    payload: {
-      environment: 'production',
-    },
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-  };
+import Nav from './common/Nav.jsx';
 
-  const i18n = i18next.createInstance();
+const App = () => (
+  <>
+    <div className="d-flex flex-column h-100">
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path={routes.notFoundPage()} element={<NotFoundPage />} />
+          <Route element={<MainRoute />}>
+            <Route path={routes.loginPage()} element={<LoginPage />} />
+            <Route path={routes.signUpPage()} element={<SignUpPage />} />
+          </Route>
+          <Route element={<ChatRoute />}>
+            <Route path={routes.chatPage()} element={<ChatPage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
+  </>
+);
 
-  i18n.use(initReactI18next).init({
-    resources,
-    lng: 'ru',
-    fallbackLng: 'ru',
-  });
-
-  const token = getTokenFromContext();
-
-  return (
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
-        <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
-            <AuthProvider>
-              <ApiProvider token={token}>
-                <App />
-              </ApiProvider>
-            </AuthProvider>
-          </Provider>
-        </I18nextProvider>
-      </ErrorBoundary>
-    </RollbarProvider>
-  );
-};
-
-export default init;
+export default App;
