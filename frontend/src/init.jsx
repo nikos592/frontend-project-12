@@ -28,7 +28,7 @@ const init = async () => {
     fallbackLng: 'ru',
   });
 
-  const token = store.getState().auth.token;
+  const token = store.getState().authentication.token;
 
   return (
     <RollbarProvider config={rollbarConfig}>
