@@ -10,10 +10,10 @@ import ChatRoute from './routes/ChatRoute.jsx';
 import MainRoute from './routes/MainRoute.jsx';
 import { routes } from './routes/routes.js';
 
-import LoginPage from './Login/LoginPage.jsx';
-import SignUpPage from './SignUp/SignUpPage.jsx';
-import ChatPage from './Chat/ChatPage.jsx';
-import NotFoundPage from './NotFound/NotFoundPage.jsx';
+import LoginPage from './components/Login/LoginPage.jsx';
+import SignUpPage from './components/SignUp/SignUpPage.jsx';
+import ChatPage from './components/Chat/ChatPage.jsx';
+import NotFoundPage from './components/NotFound/NotFoundPage.jsx';
 
 import Nav from './common/Nav.jsx';
 
