@@ -32,14 +32,14 @@ const init = async (socket) => {
       lng: 'ru',
       fallbackLng: 'ru',
     });
-
+ const token = store.getState().auth.token;
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <AuthProvider>
-              <ApiProvider socket={socket}>
+              <ApiProvider token={token} socket={socket}>
                 <App />
               </ApiProvider>
             </AuthProvider>
