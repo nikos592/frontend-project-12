@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import filter from 'leo-profanity';
 
 const MessagesHeader = ({ channelName, messagesAmount }) => {
@@ -10,7 +9,7 @@ const MessagesHeader = ({ channelName, messagesAmount }) => {
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">
-        <b>{`# ${filter.clean(channelName)}`}</b>
+        <b>{channelName && `# ${filter.clean(channelName)}`}</b>
       </p>
       <span className="text-muted">
         {t('ui.counter.count', { count: messagesAmount })}
