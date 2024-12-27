@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { useApi } from '../../../hooks/index.jsx';
+import { useAuth } from '../../../hooks/index.jsx';
 
 import { customSelectors } from '../../../slices/channelsSlice';
 
@@ -23,16 +24,20 @@ const schema = (channels) => yup.object().shape({
 const Add = ({ handleClose }) => {
   const { t } = useTranslation();
   const api = useApi();
+  const { getAuthHeader } = useAuth();
+  const dispatch = useDispatch();
 
   const inputRef = useRef(null);
 
   const channelsName = useSelector(customSelectors.allChannels)
     .reduce((acc, channel) => [...acc, channel.name], []);
 
+    
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
+  
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -40,9 +45,13 @@ const Add = ({ handleClose }) => {
     validationSchema: schema(channelsName),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
-        api.addChannel(values);
+        const authHeader = getAuthHeader();
+        const response = await api.addChannel(values, authHeader);
+        
+        dispatch(actions.addChannel(response.data));
+        
         toast.success(t('notify.createdChannel'));
         handleClose();
       } catch (error) {
