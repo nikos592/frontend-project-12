@@ -21,7 +21,6 @@ import { AuthContext } from '../contexts/index.jsx';
 const App = () => {
   const { getAuthHeader, saveAuthHeaders } = useContext(AuthContext);
 
-  // Читаем заголовки только при первом рендеринге
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;

@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiRoutes } from '../routes/routes';
 
-// Запрос для получения списка каналов
 export const fetchChannels = createAsyncThunk(
   'fetchChannels',
   async (header) => {
@@ -18,7 +17,6 @@ export const fetchChannels = createAsyncThunk(
   }
 );
 
-// Запрос для получения всех сообщений
 export const fetchMessages = createAsyncThunk(
   'fetchMessages',
   async (header) => {

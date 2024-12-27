@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useApi } from '../../../hooks/index.jsx';
-
 import { selectors } from '../../../slices/modalSlice';
 
 const Remove = ({ handleClose }) => {
@@ -14,9 +13,9 @@ const Remove = ({ handleClose }) => {
 
   const { channelId } = useSelector(selectors.getModalContext);
 
-  const onClick = () => {
+  const onClick = async () => {
     try {
-      api.removeChannel(channelId);
+      const response = await api.removeChannel(channelId);
       toast.success(t('notify.removedChannel'));
       handleClose();
     } catch {
@@ -30,7 +29,7 @@ const Remove = ({ handleClose }) => {
         <Modal.Title>{t('ui.removeChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Уверены?</p>
+        <p className="lead">Уверенны?</p>
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"
@@ -52,3 +51,4 @@ const Remove = ({ handleClose }) => {
 };
 
 export default Remove;
+
