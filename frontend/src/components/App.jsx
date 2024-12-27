@@ -21,15 +21,18 @@ import { AuthContext } from '../contexts/index.jsx';
 const App = () => {
   const { getAuthHeader, saveAuthHeaders } = useContext(AuthContext);
 
+  // Читаем заголовки только при первом рендеринге
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
-    
-    if (token) {
-      saveAuthHeaders({ Authorization: `Bearer ${token}` }); 
-    }
-  }, [getAuthHeader, saveAuthHeaders]);
 
+    if (token) {
+      // Сохраним токен в контексте
+      saveAuthHeaders({ Authorization: `Bearer ${token}` });
+    }
+  }, []);
+
+  
   return (
     <>
       <div className="d-flex flex-column h-100">
