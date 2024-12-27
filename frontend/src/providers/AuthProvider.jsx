@@ -11,14 +11,13 @@ const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('userId'));
   const [user, setUser] = useState(currentUser);
 
-  // Логика для сохранения токена в локальное хранилище
   const saveAuthHeaders = useCallback((headers) => {
     if (headers?.Authorization) {
       const token = headers.Authorization.split(' ')[1];
-      localStorage.setItem('userToken', token); // Сохраняем токен в localStorage
-      setUser({ ...user, token });
+      localStorage.setItem('userToken', token); 
+      setUser(prevUser => ({ ...prevUser, token }));
     }
-  }, [setUser, user]);
+  }, [setUser]);
 
   const logIn = useCallback((data) => {
     localStorage.setItem('userId', JSON.stringify(data));
@@ -44,7 +43,7 @@ const AuthProvider = ({ children }) => {
     logIn,
     logOut,
     getAuthHeader,
-    saveAuthHeaders, // Добавляем метод в контекст
+    saveAuthHeaders,
   }), [user, logIn, logOut, getAuthHeader, saveAuthHeaders]);
 
   return (
