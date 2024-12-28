@@ -13,23 +13,34 @@ import filter from 'leo-profanity';
 import { actions as channelsActions } from '../../../slices/channelsSlice.js';
 import { actions as modalActions } from '../../../slices/modalSlice.js';
 
+// Инициализируем словарь сразу после импорта
+filter.getDictionary();
+
 const CloseChannel = ({
   name, sharedClasses, activeClass, handleSelect,
-}) => (
-  <Button
-    variant="default"
-    className={cn(sharedClasses, activeClass)}
-    onClick={handleSelect}
-  >
-    <span className="me-1">#</span>
-    {filter.clean(name)}
-  </Button>
-);
+}) => {
+  // Безопасная обработка имени канала
+  const cleanedName = typeof name === 'string' ? filter.clean(name) : '';
+
+  return (
+    <Button
+      variant="default"
+      className={cn(sharedClasses, activeClass)}
+      onClick={handleSelect}
+    >
+      <span className="me-1">#</span>
+      {cleanedName}
+    </Button>
+  );
+};
 
 const OpenChannel = ({
   name, sharedClasses, activeClass, handleSelect, handleRename, handleRemove,
 }) => {
   const { t } = useTranslation();
+
+  // Безопасная обработка имени канала
+  const cleanedName = typeof name === 'string' ? filter.clean(name) : '';
 
   return (
     <Dropdown
@@ -42,7 +53,7 @@ const OpenChannel = ({
         onClick={handleSelect}
       >
         <span className="me-1">#</span>
-        {filter.clean(name)}
+        {cleanedName}
       </Button>
       <Dropdown.Toggle
         variant="default"
@@ -60,7 +71,6 @@ const OpenChannel = ({
 };
 
 const Channels = ({ channels, currentChannelId }) => {
-  filter.getDictionary();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
