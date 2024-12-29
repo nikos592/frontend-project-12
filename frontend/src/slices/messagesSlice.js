@@ -1,6 +1,7 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect'; 
 
-import { fetchMessages } from './fetchData.js'; // Импортируем новый асинхронный thunk
+import { fetchMessages } from './fetchData.js'; 
 import { actions as channelsActions } from './channelsSlice.js';
 
 const messagesAdapter = createEntityAdapter();
@@ -25,20 +26,20 @@ const messagesSlice = createSlice({
         messagesAdapter.removeMany(state, channelMessages);
       })
       .addCase(fetchMessages.fulfilled, (state, { payload }) => {
-        messagesAdapter.setAll(state, payload); // Обновляем сообщения
+        messagesAdapter.setAll(state, payload); 
       });
   },
 });
 
 export const { actions } = messagesSlice;
 const selectors = messagesAdapter.getSelectors((state) => state.messages);
+
 export const customSelectors = {
   allMessages: selectors.selectAll,
-  currentChannelMessages: (state) => {
-    const { currentChannelId } = state.channels;
-
-    return selectors.selectAll(state)
-      .filter(({ channelId }) => channelId === currentChannelId);
-  },
+  currentChannelMessages: createSelector(
+    [selectors.selectAll, (state) => state.channels.currentChannelId],
+    (allMessages, currentChannelId) => allMessages.filter(({ channelId }) => channelId === currentChannelId)
+  ),
 };
+
 export default messagesSlice.reducer;

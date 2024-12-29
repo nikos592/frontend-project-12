@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect'; // Добавлено: импорт createSelector
 
 import { fetchChannels } from './fetchData.js'; // Импортируем новый асинхронный thunk
 
@@ -39,13 +40,19 @@ const channelsSlice = createSlice({
 
 export const { actions } = channelsSlice;
 const selectors = channelsAdapter.getSelectors((state) => state.channels);
+
+// Изменено: мемоизация channelsNames с помощью createSelector
 export const customSelectors = {
   allChannels: selectors.selectAll,
-  channelsNames: (state) => selectors.selectAll(state).map(({ name }) => name),
+  channelsNames: createSelector(
+    selectors.selectAll,
+    (allChannels) => allChannels.map(({ name }) => name)
+  ),
   currentChannel: (state) => {
     const { currentChannelId } = state.channels;
 
     return selectors.selectById(state, currentChannelId);
   },
 };
+
 export default channelsSlice.reducer;

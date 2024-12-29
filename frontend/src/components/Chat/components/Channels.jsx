@@ -6,39 +6,27 @@ import {
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import cn from 'classnames';
 import filter from 'leo-profanity';
-
 import { actions as channelsActions } from '../../../slices/channelsSlice.js';
 import { actions as modalActions } from '../../../slices/modalSlice.js';
 
-// Инициализируем словарь сразу после импорта
-filter.getDictionary();
-
 const CloseChannel = ({
   name, sharedClasses, activeClass, handleSelect,
-}) => {
-  // Безопасная обработка имени канала
-  const cleanedName = typeof name === 'string' ? filter.clean(name) : '';
-
-  return (
-    <Button
-      variant="default"
-      className={cn(sharedClasses, activeClass)}
-      onClick={handleSelect}
-    >
-      <span className="me-1">#</span>
-      {cleanedName}
-    </Button>
-  );
-};
-
+}) => (
+  <Button
+    variant="default"
+    className={cn(sharedClasses, activeClass)}
+    onClick={handleSelect}
+  >
+    <span className="me-1">#</span>
+    {filter.clean(name)}
+  </Button>
+);
 const OpenChannel = ({
   name, sharedClasses, activeClass, handleSelect, handleRename, handleRemove,
 }) => {
   const { t } = useTranslation();
-
   // Безопасная обработка имени канала
   const cleanedName = typeof name === 'string' ? filter.clean(name) : '';
 
@@ -69,37 +57,29 @@ const OpenChannel = ({
     </Dropdown>
   );
 };
-
 const Channels = ({ channels, currentChannelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const handleSelect = (id) => () => {
     dispatch(channelsActions.changeChannel(id));
   };
-
   const handleAdd = () => {
     dispatch(modalActions.open({ type: 'adding' }));
   };
-
   const handleRename = (id, name) => () => {
     const context = {
       channelId: id,
       channelName: name,
     };
-
     dispatch(modalActions.open({ type: 'renaming', context }));
   };
-
   const handleRemove = (id, name) => () => {
     const context = {
       channelId: id,
       channelName: name,
     };
-
     dispatch(modalActions.open({ type: 'removing', context }));
   };
-
   const sharedClasses = {
     'w-100': true,
     'rounded-0': true,
@@ -108,7 +88,6 @@ const Channels = ({ channels, currentChannelId }) => {
   const activeClass = (id) => ({
     'btn-secondary': id === currentChannelId,
   });
-
   return (
     <Col className="col-4 col-md-2 border-end px-0 flex-column h-100 d-flex bg-light">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -140,7 +119,6 @@ const Channels = ({ channels, currentChannelId }) => {
       >
         {channels.map(({ id, name, removable }) => {
           const Channel = removable ? OpenChannel : CloseChannel;
-
           return (
             <Nav.Item
               key={id}
@@ -162,5 +140,4 @@ const Channels = ({ channels, currentChannelId }) => {
     </Col>
   );
 };
-
 export default Channels;

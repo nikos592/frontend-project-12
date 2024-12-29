@@ -32,15 +32,13 @@ const Add = ({ handleClose }) => {
   const channelsName = useSelector(customSelectors.allChannels)
     .reduce((acc, channel) => [...acc, channel.name], []);
 
-    
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
 
-  
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: '', 
     },
     validationSchema: schema(channelsName),
     validateOnBlur: false,
@@ -53,16 +51,16 @@ const Add = ({ handleClose }) => {
         dispatch(actions.addChannel(response.data));
         
         toast.success(t('notify.createdChannel'));
-        handleClose();
+        handleClose(); 
       } catch (error) {
         formik.setSubmitting(false);
 
         if (error.isAxiosError && error.response.status === 401) {
           inputRef.current.select();
-
-          return;
+          toast.error(t('notify.unauthorized')); 
+        } else {
+          toast.error(t('notify.networkError')); 
         }
-        toast.error(t('notify.networkError'));
       }
     },
   });
