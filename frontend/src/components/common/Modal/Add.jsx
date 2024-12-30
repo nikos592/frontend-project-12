@@ -43,26 +43,26 @@ const Add = ({ handleClose }) => {
     validationSchema: schema(channelsName),
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values) => {
-      try {
-        const authHeader = getAuthHeader();
-        const response = await api.addChannel(values, authHeader);
-        
-        dispatch(actions.addChannel(response.data));
-        
-        toast.success(t('notify.createdChannel'));
-        handleClose(); 
-      } catch (error) {
-        formik.setSubmitting(false);
+onSubmit: async (values) => {
+  if (!values.name) {
+    toast.error(t('errors.emptyChannelName'));
+    return;
+  }
+  try {
+    await api.addChannel(values);
+    toast.success(t('notify.createdChannel'));
+    handleClose();
+  } catch (error) {
+    formik.setSubmitting(false);
 
-        if (error.isAxiosError && error.response.status === 401) {
-          inputRef.current.select();
-          toast.error(t('notify.unauthorized')); 
-        } else {
-          toast.error(t('notify.networkError')); 
-        }
-      }
-    },
+    if (error.isAxiosError && error.response.status === 401) {
+      inputRef.current.select();
+      toast.error(t('notify.unauthorized'));
+    } else {
+      toast.error(t('notify.networkError'));
+    }
+  }
+},
   });
 
   return (
