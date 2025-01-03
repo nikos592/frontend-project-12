@@ -46,7 +46,7 @@ export const customSelectors = {
   allChannels: selectors.selectAll,
   channelsNames: createSelector(
     selectors.selectAll,
-    (allChannels) => allChannels.map(({ name }) => name)
+    (allChannels) => allChannels.map(({ name }) => name),
   ),
   currentChannel: (state) => {
     const { currentChannelId } = state.channels;

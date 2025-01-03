@@ -51,4 +51,3 @@ const Remove = ({ handleClose }) => {
 };
 
 export default Remove;
-

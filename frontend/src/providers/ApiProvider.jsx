@@ -2,15 +2,15 @@ import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { ApiContext } from '../contexts/index.jsx';
-import { AuthContext } from '../contexts/index.jsx'; 
+import { ApiContext, AuthContext } from '../contexts/index.jsx';
+
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 
 const ApiProvider = ({ children }) => {
-  const { getAuthHeader } = useContext(AuthContext); 
-  const headers = getAuthHeader(); 
-  const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null; 
+  const { getAuthHeader } = useContext(AuthContext);
+  const headers = getAuthHeader();
+  const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
 
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const ApiProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       dispatch(messagesActions.addMessage(response.data));
       return response.data;
     } catch (error) {
@@ -42,7 +42,7 @@ const ApiProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       dispatch(channelsActions.addChannel(response.data));
       dispatch(channelsActions.changeChannel(response.data.id));
       return response.data;
@@ -60,7 +60,7 @@ const ApiProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       dispatch(channelsActions.renameChannel({ id, changes: { name } }));
       return response.data;
     } catch (error) {
@@ -75,7 +75,7 @@ const ApiProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       dispatch(channelsActions.removeChannel(id));
       return response.data;
     } catch (error) {
@@ -86,7 +86,8 @@ const ApiProvider = ({ children }) => {
   return (
     <ApiContext.Provider value={{
       addChannel, addMessage, renameChannel, removeChannel,
-    }}>
+    }}
+    >
       {children}
     </ApiContext.Provider>
   );

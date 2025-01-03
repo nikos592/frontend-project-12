@@ -7,8 +7,7 @@ import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { useApi } from '../../../hooks/index.jsx';
-import { useAuth } from '../../../hooks/index.jsx';
+import { useApi, useAuth } from '../../../hooks/index.jsx';
 
 import { customSelectors } from '../../../slices/channelsSlice';
 
@@ -38,31 +37,31 @@ const Add = ({ handleClose }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '', 
+      name: '',
     },
     validationSchema: schema(channelsName),
     validateOnBlur: false,
     validateOnChange: false,
-onSubmit: async (values) => {
-  if (!values.name) {
-    toast.error(t('errors.emptyChannelName'));
-    return;
-  }
-  try {
-    await api.addChannel(values);
-    toast.success(t('notify.createdChannel'));
-    handleClose();
-  } catch (error) {
-    formik.setSubmitting(false);
+    onSubmit: async (values) => {
+      if (!values.name) {
+        toast.error(t('errors.emptyChannelName'));
+        return;
+      }
+      try {
+        await api.addChannel(values);
+        toast.success(t('notify.createdChannel'));
+        handleClose();
+      } catch (error) {
+        formik.setSubmitting(false);
 
-    if (error.isAxiosError && error.response.status === 401) {
-      inputRef.current.select();
-      toast.error(t('notify.unauthorized'));
-    } else {
-      toast.error(t('notify.networkError'));
-    }
-  }
-},
+        if (error.isAxiosError && error.response.status === 401) {
+          inputRef.current.select();
+          toast.error(t('notify.unauthorized'));
+        } else {
+          toast.error(t('notify.networkError'));
+        }
+      }
+    },
   });
 
   return (

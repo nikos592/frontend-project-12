@@ -14,7 +14,7 @@ export const fetchChannels = createAsyncThunk(
       }
       return Promise.reject({ status: error.response.status, data: error.response.data });
     }
-  }
+  },
 );
 
 export const fetchMessages = createAsyncThunk(
@@ -29,5 +29,5 @@ export const fetchMessages = createAsyncThunk(
       }
       return Promise.reject({ status: error.response.status, data: error.response.data });
     }
-  }
+  },
 );

@@ -31,7 +31,6 @@ const App = () => {
     }
   }, []);
 
-  
   return (
     <>
       <div className="d-flex flex-column h-100">
