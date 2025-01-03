@@ -46,7 +46,7 @@ const Add = ({ handleClose }) => {
         return;
       }
       try {
-        await api.addChannel(values);
+        await api.addChannel(values.name);
         toast.success(t('notify.createdChannel'));
         handleClose();
       } catch (error) {
