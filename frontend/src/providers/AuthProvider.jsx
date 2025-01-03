@@ -14,8 +14,8 @@ const AuthProvider = ({ children }) => {
   const saveAuthHeaders = useCallback((headers) => {
     if (headers?.Authorization) {
       const token = headers.Authorization.split(' ')[1];
-      localStorage.setItem('userToken', token);
-      setUser((prevUser) => ({ ...prevUser, token }));
+      localStorage.setItem('userToken', token); 
+      setUser(prevUser => ({ ...prevUser, token }));
     }
   }, [setUser]);
 

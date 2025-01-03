@@ -30,34 +30,32 @@ const ModalRoot = () => {
   useEffect(() => {
     // Динамическое определение URL WebSocket-сервера
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const { host } = window.location;
+    const host = window.location.host;
     const websocketUrl = `${protocol}//${host}/ws`;
 
     socket = new WebSocket(websocketUrl);
-
+    
     socket.addEventListener('open', () => {
       console.log('Connected to the server via WebSocket');
     });
 
     socket.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
-
-      switch (data.type) {
+      
+      switch(data.type) {
         case 'newMessage':
-          setMessages((prevMessages) => [...prevMessages, data.payload]);
+          setMessages(prevMessages => [...prevMessages, data.payload]);
           break;
         case 'newChannel':
-          setChannels((prevChannels) => [...prevChannels, data.payload]);
+          setChannels(prevChannels => [...prevChannels, data.payload]);
           break;
         case 'removeChannel':
-          setChannels((prevChannels) => {
-            prevChannels.filter((channel) => channel.id !== data.payload.id);
-          });
+          setChannels(prevChannels => prevChannels.filter(channel => channel.id !== data.payload.id));
           break;
         case 'renameChannel':
-          setChannels((prevChannels) => prevChannels.map((channel) => {
+          setChannels(prevChannels => prevChannels.map(channel => {
             if (channel.id === data.payload.id) {
-              return { ...channel, name: data.payload.name };
+              return {...channel, name: data.payload.name};
             }
             return channel;
           }));

@@ -5,7 +5,7 @@ import filter from 'leo-profanity';
 const MessagesHeader = ({ channelName, messagesAmount }) => {
   // Проверяем, является ли channelName строкой
   const cleanedChannelName = typeof channelName === 'string' ? filter.clean(channelName) : '';
-
+  
   const { t } = useTranslation();
 
   return (

@@ -1,13 +1,21 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
+import { useApi } from '../../../hooks/index.jsx';
+import { selectors } from '../../../slices/modalSlice';
+
 const Remove = ({ handleClose }) => {
   const { t } = useTranslation();
+  const api = useApi();
+
+  const { channelId } = useSelector(selectors.getModalContext);
 
   const onClick = async () => {
     try {
+      const response = await api.removeChannel(channelId);
       toast.success(t('notify.removedChannel'));
       handleClose();
     } catch {
@@ -43,3 +51,4 @@ const Remove = ({ handleClose }) => {
 };
 
 export default Remove;
+

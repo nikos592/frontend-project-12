@@ -29,8 +29,9 @@ const App = () => {
       // Сохраним токен в контексте
       saveAuthHeaders({ Authorization: `Bearer ${token}` });
     }
-  }, [getAuthHeader, saveAuthHeaders]);
+  }, []);
 
+  
   return (
     <>
       <div className="d-flex flex-column h-100">
