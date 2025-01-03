@@ -72,7 +72,6 @@ const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { getAuthHeader, logOut } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchChannels(getAuthHeader())); // Отправляем запрос на получение каналов

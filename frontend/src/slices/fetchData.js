@@ -12,9 +12,9 @@ export const fetchChannels = createAsyncThunk(
       if (!error.response) {
         throw error;
       }
-      return Promise.reject({ status: error.response.status, data: error.response.data });
+      return Promise.reject(new Error(`Status: ${error.response.status}, Data: ${JSON.stringify(error.response.data)}`));
     }
-  }
+  },
 );
 
 export const fetchMessages = createAsyncThunk(
@@ -27,7 +27,7 @@ export const fetchMessages = createAsyncThunk(
       if (!error.response) {
         throw error;
       }
-      return Promise.reject({ status: error.response.status, data: error.response.data });
+      return Promise.reject(new Error(`Status: ${error.response.status}, Data: ${JSON.stringify(error.response.data)}`));
     }
-  }
+  },
 );

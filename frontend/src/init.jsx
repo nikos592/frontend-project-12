@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react'; 
+// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 import resources from './locales/index.js';
 import store from './slices/index.js';
@@ -10,10 +10,9 @@ import AuthProvider from './providers/AuthProvider.jsx';
 import ApiProvider from './providers/ApiProvider.jsx';
 import App from './components/App.jsx';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from './contexts/index.jsx';
 
 const init = async () => {
-  // const rollbarConfig = { 
+  // const rollbarConfig = {
   //   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
   //   payload: {
   //     environment: 'production',

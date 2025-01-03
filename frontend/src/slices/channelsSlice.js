@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { createSelector } from 'reselect'; // Добавлено: импорт createSelector
+import { createSelector } from 'reselect';
 
 import { fetchChannels } from './fetchData.js'; // Импортируем новый асинхронный thunk
 
@@ -33,7 +33,8 @@ const channelsSlice = createSlice({
     builder
       .addCase(fetchChannels.fulfilled, (state, { payload }) => {
         channelsAdapter.setAll(state, payload); // Обновляем каналы
-        state.currentChannelId = payload.length > 0 ? payload[0].id : null; // Устанавливаем первый канал активным
+        state.currentChannelId = payload.length > 0 ? payload[0].id : null;
+        // Устанавливаем первый канал активным
       });
   },
 });
@@ -46,7 +47,7 @@ export const customSelectors = {
   allChannels: selectors.selectAll,
   channelsNames: createSelector(
     selectors.selectAll,
-    (allChannels) => allChannels.map(({ name }) => name)
+    (allChannels) => allChannels.map(({ name }) => name),
   ),
   currentChannel: (state) => {
     const { currentChannelId } = state.channels;
