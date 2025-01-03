@@ -33,7 +33,8 @@ const channelsSlice = createSlice({
     builder
       .addCase(fetchChannels.fulfilled, (state, { payload }) => {
         channelsAdapter.setAll(state, payload); // Обновляем каналы
-        state.currentChannelId = payload.length > 0 ? payload[0].id : null; // Устанавливаем первый канал активным
+        state.currentChannelId = payload.length > 0 ? payload[0].id : null;
+        // Устанавливаем первый канал активным
       });
   },
 });

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
@@ -14,80 +14,69 @@ const ApiProvider = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const addMessage = async (body, channelId, username) => {
-    try {
-      const response = await axios.post('/api/v1/messages', {
-        body,
-        channelId,
-        username,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const addMessage = useCallback(async (body, channelId, username) => {
+    const response = await axios.post('/api/v1/messages', {
+      body,
+      channelId,
+      username,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      dispatch(messagesActions.addMessage(response.data));
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+    dispatch(messagesActions.addMessage(response.data));
+    return response.data;
+  }, [dispatch, token]);
 
-  const addChannel = async (name) => {
-    try {
-      const response = await axios.post('/api/v1/channels', {
-        name,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const addChannel = useCallback(async (name) => {
+    const response = await axios.post('/api/v1/channels', {
+      name,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      dispatch(channelsActions.addChannel(response.data));
-      dispatch(channelsActions.changeChannel(response.data.id));
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+    dispatch(channelsActions.addChannel(response.data));
+    dispatch(channelsActions.changeChannel(response.data.id));
+    return response.data;
+  }, [dispatch, token]);
 
-  const renameChannel = async (id, name) => {
-    try {
-      const response = await axios.patch(`/api/v1/channels/${id}`, {
-        name,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const renameChannel = useCallback(async (id, name) => {
+    const response = await axios.patch(`/api/v1/channels/${id}`, {
+      name,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      dispatch(channelsActions.renameChannel({ id, changes: { name } }));
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+    dispatch(channelsActions.renameChannel({ id, changes: { name } }));
+    return response.data;
+  }, [dispatch, token]);
 
-  const removeChannel = async (id) => {
-    try {
-      const response = await axios.delete(`/api/v1/channels/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const removeChannel = useCallback(async (id) => {
+    const response = await axios.delete(`/api/v1/channels/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      dispatch(channelsActions.removeChannel(id));
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+    dispatch(channelsActions.removeChannel(id));
+    return response.data;
+  }, [dispatch, token]);
+
+  // Мемоизация методов API
+  const apiMethods = useMemo(() => ({
+    addChannel,
+    addMessage,
+    renameChannel,
+    removeChannel,
+  }), [addChannel, addMessage, renameChannel, removeChannel]);
 
   return (
-    <ApiContext.Provider value={{
-      addChannel, addMessage, renameChannel, removeChannel,
-    }}
-    >
+    <ApiContext.Provider value={apiMethods}>
       {children}
     </ApiContext.Provider>
   );

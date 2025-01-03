@@ -38,7 +38,9 @@ export const customSelectors = {
   allMessages: selectors.selectAll,
   currentChannelMessages: createSelector(
     [selectors.selectAll, (state) => state.channels.currentChannelId],
-    (allMessages, currentChannelId) => allMessages.filter(({ channelId }) => channelId === currentChannelId),
+    (allMessages, currentChannelId) => allMessages.filter(
+      ({ channelId }) => channelId === currentChannelId,
+    ),
   ),
 };
 

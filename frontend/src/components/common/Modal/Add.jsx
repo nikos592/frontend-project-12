@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { useApi, useAuth } from '../../../hooks/index.jsx';
+import { useApi } from '../../../hooks/index.jsx';
 
 import { customSelectors } from '../../../slices/channelsSlice';
 
@@ -23,8 +23,6 @@ const schema = (channels) => yup.object().shape({
 const Add = ({ handleClose }) => {
   const { t } = useTranslation();
   const api = useApi();
-  const { getAuthHeader } = useAuth();
-  const dispatch = useDispatch();
 
   const inputRef = useRef(null);
 

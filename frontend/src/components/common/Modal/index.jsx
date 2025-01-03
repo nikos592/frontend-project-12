@@ -50,7 +50,9 @@ const ModalRoot = () => {
           setChannels((prevChannels) => [...prevChannels, data.payload]);
           break;
         case 'removeChannel':
-          setChannels((prevChannels) => prevChannels.filter((channel) => channel.id !== data.payload.id));
+          setChannels((prevChannels) => {
+            prevChannels.filter((channel) => channel.id !== data.payload.id);
+          });
           break;
         case 'renameChannel':
           setChannels((prevChannels) => prevChannels.map((channel) => {
