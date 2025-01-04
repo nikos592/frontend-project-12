@@ -4,7 +4,10 @@ import { FilterContext } from '../contexts';
 
 export const FilterProvider = ({ children }) => {
   const filter = useMemo(() => {
-    leoProfanity.loadDictionary('ru');
+    const russianWords = leoProfanity.getDictionary('ru');
+    const englishWords = leoProfanity.getDictionary('en');
+    leoProfanity.addDictionary('multiLang', [...russianWords, ...englishWords]);
+    leoProfanity.loadDictionary('multiLang');
     return leoProfanity;
   }, []);
 

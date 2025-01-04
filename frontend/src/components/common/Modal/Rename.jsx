@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -37,7 +38,7 @@ const Rename = ({ handleClose }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: channelName,
+      name: filter.clean(channelName),
     },
     validationSchema: schema(channelsNames),
     validateOnBlur: false,
