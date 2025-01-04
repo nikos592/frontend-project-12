@@ -15,7 +15,7 @@ const CloseChannel = ({
   name, sharedClasses, activeClass, handleSelect,
 }) => (
   <Button
-    variant="default"
+    variant=""
     className={cn(sharedClasses, activeClass)}
     onClick={handleSelect}
   >
