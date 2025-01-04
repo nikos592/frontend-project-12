@@ -18,10 +18,10 @@ const messagesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(channelsActions.removeChannel, (state, action) => {
-        const channel = action.payload;
+        const channelId = action.payload; // Теперь payload - это id
         const channelMessages = Object
           .values(state.entities)
-          .filter((e) => channel.id === e.channelId)
+          .filter((message) => message.channelId === channelId)
           .map((message) => message.id);
         messagesAdapter.removeMany(state, channelMessages);
       })
