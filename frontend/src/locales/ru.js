@@ -19,6 +19,7 @@ const ru = {
       rangeLetter: 'От 3 до 20 символов',
       required: 'Обязательное поле',
       unknown: 'Что-то пошло не так',
+      tokenExpired: 'Токен устарел. Повторите вход.',
     },
     fields: {
       confirmPassword: 'Подтвердите пароль',

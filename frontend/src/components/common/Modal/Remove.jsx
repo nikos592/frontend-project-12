@@ -15,8 +15,7 @@ const Remove = ({ handleClose }) => {
 
   const onClick = async () => {
     try {
-      const response = await api.removeChannel(channelId);
-      console.log(response.data);
+      await api.removeChannel(channelId);
       toast.success(t('notify.removedChannel'));
       handleClose();
     } catch {

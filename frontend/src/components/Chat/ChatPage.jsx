@@ -47,10 +47,6 @@ const Content = () => {
   const currentChannel = useSelector(channelsSelectors.currentChannel);
   const currentChannelMessages = useSelector(messagesSelectors.currentChannelMessages);
 
-  useEffect(() => {
-    console.log('Loading State in Content:', loadingState);
-  }, [loadingState]);
-
   switch (loadingState) {
     case stateLoad.success:
       return (
@@ -79,10 +75,6 @@ const ChatPage = () => {
   }, [dispatch, getAuthHeader]);
 
   const loadingState = useSelector(loadingStateSelectors.getStatus);
-
-  useEffect(() => {
-    console.log('Loading State in Component:', loadingState);
-  }, [loadingState]);
 
   switch (loadingState) {
     case stateLoad.error:

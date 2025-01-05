@@ -1,5 +1,12 @@
-import { useState, useMemo, useCallback } from 'react';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../contexts/index.jsx';
 
@@ -7,6 +14,7 @@ import { actions as loadingStateActions } from '../slices/loadingStateSlice.js';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const currentUser = JSON.parse(localStorage.getItem('userId'));
   const [user, setUser] = useState(currentUser);
@@ -26,6 +34,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = useCallback(() => {
     localStorage.removeItem('userId');
+    localStorage.removeItem('userToken');
     dispatch(loadingStateActions.unload());
     setUser(null);
   }, [dispatch]);
@@ -34,9 +43,32 @@ const AuthProvider = ({ children }) => {
     if (user && user.token) {
       return { Authorization: `Bearer ${user.token}` };
     }
-
     return {};
   }, [user]);
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === 'userId' || event.key === 'userToken') {
+        try {
+          const newUser = JSON.parse(localStorage.getItem('userId'));
+          const newToken = localStorage.getItem('userToken');
+
+          if (!newUser?.token || !newToken) {
+            logOut();
+          }
+        } catch (error) {
+          logOut();
+          toast.error(t('errors.tokenExpired'));
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [logOut]);
 
   const context = useMemo(() => ({
     user,

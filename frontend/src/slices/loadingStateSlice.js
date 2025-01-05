@@ -21,32 +21,18 @@ const loadingStateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChannels.pending, (state) => {
-        console.log('Pending:', state);
-        return { ...state, status: stateLoad.load };
-      })
-      .addCase(fetchChannels.fulfilled, (state) => {
-        console.log('Fulfilled:', state);
-        return { ...state, status: stateLoad.success };
-      })
+      .addCase(fetchChannels.pending, (state) => ({ ...state, status: stateLoad.load }))
+      .addCase(fetchChannels.fulfilled, (state) => ({ ...state, status: stateLoad.success }))
       .addCase(fetchChannels.rejected, (state, action) => {
-        console.log('Rejected:', state, action);
         if (action.payload?.status === 401) {
           return { ...state, status: stateLoad.error };
         }
 
         return { ...state, status: stateLoad.fail };
       })
-      .addCase(fetchMessages.pending, (state) => {
-        console.log('Pending:', state);
-        return { ...state, status: stateLoad.load };
-      })
-      .addCase(fetchMessages.fulfilled, (state) => {
-        console.log('Fulfilled:', state);
-        return { ...state, status: stateLoad.success };
-      })
+      .addCase(fetchMessages.pending, (state) => ({ ...state, status: stateLoad.load }))
+      .addCase(fetchMessages.fulfilled, (state) => ({ ...state, status: stateLoad.success }))
       .addCase(fetchMessages.rejected, (state, action) => {
-        console.log('Rejected:', state, action);
         if (action.payload?.status === 401) {
           return { ...state, status: stateLoad.error };
         }

@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
-  Nav, Dropdown, ButtonGroup, Button, Col,
+  Dropdown, ButtonGroup, Button, Col, Nav,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -60,6 +60,7 @@ const OpenChannel = ({
 const Channels = ({ channels, currentChannelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const channelsRef = useRef(null);
 
   const handleSelect = (id) => () => {
     dispatch(channelsActions.changeChannel(id));
@@ -91,6 +92,15 @@ const Channels = ({ channels, currentChannelId }) => {
     'text-start': true,
   };
 
+  useEffect(() => {
+    const activeChannelElement = channelsRef.current.querySelector(
+      `[data-channel-id="${currentChannelId}"]`,
+    );
+    if (activeChannelElement) {
+      activeChannelElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [channels, currentChannelId]);
+
   return (
     <Col className="col-4 col-md-2 border-end px-0 flex-column h-100 d-flex bg-light">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -117,6 +127,7 @@ const Channels = ({ channels, currentChannelId }) => {
         variant="pills"
         id="channels-box"
         className="flex-column nav-fill px-2 mb-3 overflow-auto h-100 d-block"
+        ref={channelsRef}
       >
         {channels.map(({ id, name, removable }) => {
           const Channel = removable ? OpenChannel : CloseChannel;
@@ -124,6 +135,7 @@ const Channels = ({ channels, currentChannelId }) => {
             <Nav.Item
               key={id}
               className="w-100"
+              data-channel-id={id} // Добавлено для скролла
             >
               <Channel
                 key={id}
