@@ -9,9 +9,7 @@ const Messages = ({ channel, messages }) => {
   if (!channel) {
     return (
       <Col className="p-0 h-100">
-        <div className="d-flex flex-column h-100 justify-content-center align-items-center">
-          <p>Канал не найден.</p>
-        </div>
+        <div className="d-flex flex-column h-100" />
       </Col>
     );
   }
