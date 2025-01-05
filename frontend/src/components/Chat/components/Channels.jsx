@@ -15,19 +15,19 @@ const CloseChannel = ({
   name, sharedClasses, activeClass, handleSelect,
 }) => (
   <Button
-    variant=""
-    className={cn(sharedClasses, activeClass)}
+    variant={activeClass ? 'secondary' : ''}
+    className={cn(sharedClasses)}
     onClick={handleSelect}
   >
     <span className="me-1">#</span>
     {filter.clean(name)}
   </Button>
 );
+
 const OpenChannel = ({
   name, sharedClasses, activeClass, handleSelect, handleRename, handleRemove,
 }) => {
   const { t } = useTranslation();
-  // Безопасная обработка имени канала
   const cleanedName = typeof name === 'string' ? filter.clean(name) : '';
 
   return (
@@ -36,17 +36,16 @@ const OpenChannel = ({
       className="d-flex"
     >
       <Button
-        variant=""
-        className={cn(sharedClasses, activeClass, { 'text-truncate': true })}
+        variant={activeClass ? 'secondary' : ''}
+        className={cn(sharedClasses, { 'text-truncate': true })}
         onClick={handleSelect}
       >
         <span className="me-1">#</span>
         {cleanedName}
       </Button>
       <Dropdown.Toggle
-        variant=""
+        variant={activeClass ? 'secondary' : ''}
         id="react-aria9230295641-1"
-        className={cn(activeClass)}
       >
         <span className="visually-hidden">{t('buttons.channelManagement')}</span>
       </Dropdown.Toggle>
@@ -57,15 +56,19 @@ const OpenChannel = ({
     </Dropdown>
   );
 };
+
 const Channels = ({ channels, currentChannelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const handleSelect = (id) => () => {
     dispatch(channelsActions.changeChannel(id));
   };
+
   const handleAdd = () => {
     dispatch(modalActions.open({ type: 'adding' }));
   };
+
   const handleRename = (id, name) => () => {
     const context = {
       channelId: id,
@@ -73,6 +76,7 @@ const Channels = ({ channels, currentChannelId }) => {
     };
     dispatch(modalActions.open({ type: 'renaming', context }));
   };
+
   const handleRemove = (id, name) => () => {
     const context = {
       channelId: id,
@@ -80,14 +84,13 @@ const Channels = ({ channels, currentChannelId }) => {
     };
     dispatch(modalActions.open({ type: 'removing', context }));
   };
+
   const sharedClasses = {
     'w-100': true,
     'rounded-0': true,
     'text-start': true,
   };
-  const activeClass = (id) => ({
-    'btn-secondary': id === currentChannelId,
-  });
+
   return (
     <Col className="col-4 col-md-2 border-end px-0 flex-column h-100 d-flex bg-light">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -103,8 +106,6 @@ const Channels = ({ channels, currentChannelId }) => {
             width="20"
             height="20"
             fill="currentColor"
-            style={{ '--darkreader-inline-fill': 'currentColor' }}
-            data-darkreader-inline-fill=""
           >
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -128,7 +129,7 @@ const Channels = ({ channels, currentChannelId }) => {
                 key={id}
                 name={name}
                 sharedClasses={sharedClasses}
-                activeClass={activeClass(id)}
+                activeClass={id === currentChannelId}
                 handleSelect={handleSelect(id)}
                 handleRename={handleRename(id, name)}
                 handleRemove={handleRemove(id, name)}
@@ -140,4 +141,5 @@ const Channels = ({ channels, currentChannelId }) => {
     </Col>
   );
 };
+
 export default Channels;
