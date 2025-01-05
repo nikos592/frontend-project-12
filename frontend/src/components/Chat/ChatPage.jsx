@@ -82,7 +82,8 @@ const ChatPage = () => {
       logOut();
       break;
     case stateLoad.fail:
-      toast.error(t('notify.networkError'));
+      toast.error(t('notify.unauthorized'));
+      logOut();
       break;
 
     default:
