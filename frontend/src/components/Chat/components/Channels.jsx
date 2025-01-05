@@ -36,7 +36,7 @@ const OpenChannel = ({
       className="d-flex"
     >
       <Button
-        variant="default"
+        variant=""
         className={cn(sharedClasses, activeClass, { 'text-truncate': true })}
         onClick={handleSelect}
       >
@@ -44,7 +44,7 @@ const OpenChannel = ({
         {cleanedName}
       </Button>
       <Dropdown.Toggle
-        variant="default"
+        variant=""
         id="react-aria9230295641-1"
         className={cn(activeClass)}
       >
