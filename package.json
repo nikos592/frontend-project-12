@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Hexlet project 4",
   "main": "./src/index.js",
-"scripts": {
-  "build": "npm run build --prefix frontend",
-  "start": "start-server -s ./frontend/dist",
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "postinstall": "cd frontend && npm ci"
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd frontend && npm ci"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,9 @@
   "type": "module",
   "homepage": "https://github.com/nikos592/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4"
+    "@hexlet/chat-server": "^2.0.4",
+    "@rollbar/react": "^0.12.0-beta",
+    "rollbar": "^2.26.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"

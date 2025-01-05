@@ -54,17 +54,17 @@ const init = async () => {
 
   return (
     <ErrorBoundary config={rollbarConfig}>
-      <FilterProvider>
-        <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
-            <AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <FilterProvider>
+            <I18nextProvider i18n={i18n}>
               <ApiProvider>
                 <App />
               </ApiProvider>
-            </AuthProvider>
-          </Provider>
-        </I18nextProvider>
-      </FilterProvider>
+            </I18nextProvider>
+          </FilterProvider>
+        </AuthProvider>
+      </Provider>
     </ErrorBoundary>
   );
 };
