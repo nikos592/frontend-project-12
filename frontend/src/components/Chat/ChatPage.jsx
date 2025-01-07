@@ -70,24 +70,15 @@ const ChatPage = () => {
   const { getAuthHeader, logOut } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchChannels(getAuthHeader())); // Отправляем запрос на получение каналов
-    dispatch(fetchMessages(getAuthHeader())); // Отправляем запрос на получение сообщений
+    dispatch(fetchChannels(getAuthHeader()));
+    dispatch(fetchMessages(getAuthHeader()));
   }, [dispatch, getAuthHeader]);
 
   const loadingState = useSelector(loadingStateSelectors.getStatus);
 
-  switch (loadingState) {
-    case stateLoad.error:
-      toast.error(t('notify.unauthorized'));
-      logOut();
-      break;
-    case stateLoad.fail:
-      toast.error(t('notify.unauthorized'));
-      logOut();
-      break;
-
-    default:
-      break;
+  if (loadingState === stateLoad.error || loadingState === stateLoad.fail) {
+    toast.error(t('notify.unauthorized'));
+    logOut();
   }
 
   return (
