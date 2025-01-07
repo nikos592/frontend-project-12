@@ -26,7 +26,7 @@ const MessagesForm = ({ channelId }) => {
   const currentChannel = useSelector(channelsSelectors.currentChannel);
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, [currentChannel]);
 
   const formik = useFormik({
@@ -37,15 +37,17 @@ const MessagesForm = ({ channelId }) => {
     validateOnBlur: false,
     validateOnMount: true,
     onSubmit: async (values) => {
-      const { username } = JSON.parse(localStorage.userId);
+      const { username } = JSON.parse(localStorage.getItem('userId'));
 
       try {
         await api.addMessage(values.body, channelId, username);
         formik.resetForm();
+        
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
       } catch (error) {
         toast.error(t('notify.networkError'));
-      } finally {
-        inputRef.current.focus();
       }
     },
   });
