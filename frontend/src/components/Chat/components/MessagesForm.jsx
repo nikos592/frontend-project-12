@@ -43,9 +43,7 @@ const MessagesForm = ({ channelId }) => {
         await api.addMessage(values.body, channelId, username);
         formik.resetForm();
         
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
+        inputRef.current?.focus();
       } catch (error) {
         toast.error(t('notify.networkError'));
       }
