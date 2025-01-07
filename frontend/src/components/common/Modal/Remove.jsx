@@ -29,7 +29,7 @@ const Remove = ({ handleClose }) => {
         <Modal.Title>{t('ui.removeChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Уверенны?</p>
+        <p className="lead">{t('ui.confirmRemoval')}</p>
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"
