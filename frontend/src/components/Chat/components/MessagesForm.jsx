@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -21,12 +21,15 @@ const schema = yup.object().shape({
 const MessagesForm = ({ channelId }) => {
   const { t } = useTranslation();
   const api = useApi();
-  const inputRef = useRef(null);
 
   const currentChannel = useSelector(channelsSelectors.currentChannel);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    if (currentChannel) {
+      setTimeout(() => {
+        formik.setFieldTouched('body', true); 
+      }, 100); 
+    }
   }, [currentChannel]);
 
   const formik = useFormik({
@@ -42,8 +45,9 @@ const MessagesForm = ({ channelId }) => {
       try {
         await api.addMessage(values.body, channelId, username);
         formik.resetForm();
-        
-        inputRef.current?.focus();
+        setTimeout(() => {
+          formik.setFieldTouched('body', true);
+        }, 100);
       } catch (error) {
         toast.error(t('notify.networkError'));
       }
@@ -58,7 +62,6 @@ const MessagesForm = ({ channelId }) => {
       >
         <InputGroup>
           <Form.Control
-            ref={inputRef}
             className="border-0 p-0 ps-2"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
