@@ -21,15 +21,16 @@ import { AuthContext } from '../contexts/index.jsx';
 const App = () => {
   const { getAuthHeader, saveAuthHeaders } = useContext(AuthContext);
 
-  // Добавляем зависимости в useEffect
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
-    
+
     if (token) {
+      // Сохраним токен в контексте
       saveAuthHeaders({ Authorization: `Bearer ${token}` });
     }
-  }, [getAuthHeader, saveAuthHeaders]);
+  }, []);
 
   return (
     <>
