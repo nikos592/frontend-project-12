@@ -24,12 +24,10 @@ const App = () => {
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
-
-
-if (token) {
-  // Сохраним токен в контексте
-  saveAuthHeaders({ Authorization: `Bearer ${token}` });
-}
+    
+    if (token) {
+      saveAuthHeaders({ Authorization: `Bearer ${token}` });
+    }
   }, []);
 
   return (
