@@ -41,7 +41,7 @@ const SocketEventsHandler = () => {
         channelsActions.renameChannel({
           id: payload.id,
           changes: { name: payload.name },
-        })
+        }),
       );
     });
 
