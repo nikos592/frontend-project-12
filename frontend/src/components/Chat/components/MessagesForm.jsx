@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react'; 
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -23,11 +23,13 @@ const MessagesForm = ({ channelId }) => {
   const api = useApi();
 
   const currentChannel = useSelector(channelsSelectors.currentChannel);
+  
+  const inputRef = useRef();
 
   useEffect(() => {
     if (currentChannel) {
       setTimeout(() => {
-        formik.setFieldTouched('body', true); 
+        inputRef.current.focus(); 
       }, 100); 
     }
   }, [currentChannel]);
@@ -46,7 +48,7 @@ const MessagesForm = ({ channelId }) => {
         await api.addMessage(values.body, channelId, username);
         formik.resetForm();
         setTimeout(() => {
-          formik.setFieldTouched('body', true);
+          inputRef.current.focus(); 
         }, 100);
       } catch (error) {
         toast.error(t('notify.networkError'));
@@ -70,6 +72,7 @@ const MessagesForm = ({ channelId }) => {
             placeholder={t('fields.inputMessage')}
             value={formik.values.body}
             disabled={formik.isSubmitting}
+            ref={inputRef} 
           />
           <Button
             variant="group-vertical"
