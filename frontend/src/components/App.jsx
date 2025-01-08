@@ -29,7 +29,7 @@ const App = () => {
       // Сохраним токен в контексте
       saveAuthHeaders({ Authorization: `Bearer ${token}` });
     }
-  }, []);
+  }, [getAuthHeader, saveAuthHeaders]); // Добавили зависимости
 
   return (
     <>
