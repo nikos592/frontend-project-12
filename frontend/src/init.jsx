@@ -21,9 +21,9 @@ const RollbarConfig = {
 };
 
 const SocketEventsHandler = () => {
-  const socket = io();
-
   useEffect(() => {
+    const socket = io();
+
     socket.on('newMessage', (payload) => {
       store.dispatch(messagesActions.addMessage(payload));
     });
