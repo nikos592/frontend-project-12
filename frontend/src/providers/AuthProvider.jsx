@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [logOut]);
+  }, [logOut, t]);
 
   const context = useMemo(() => ({
     user,
