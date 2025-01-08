@@ -25,11 +25,12 @@ const App = () => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
 
-    if (token) {
-      // Сохраним токен в контексте
-      saveAuthHeaders({ Authorization: `Bearer ${token}` });
-    }
-  }, [getAuthHeader, saveAuthHeaders]); // Добавили зависимости
+
+if (token) {
+  // Сохраним токен в контексте
+  saveAuthHeaders({ Authorization: `Bearer ${token}` });
+}
+  }, []);
 
   return (
     <>
