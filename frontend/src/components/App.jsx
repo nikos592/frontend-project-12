@@ -21,6 +21,7 @@ import { AuthContext } from '../contexts/index.jsx';
 const App = () => {
   const { getAuthHeader, saveAuthHeaders } = useContext(AuthContext);
 
+  // Добавляем зависимости в useEffect
   useEffect(() => {
     const headers = getAuthHeader();
     const token = headers.Authorization ? headers.Authorization.split(' ')[1] : null;
@@ -28,7 +29,7 @@ const App = () => {
     if (token) {
       saveAuthHeaders({ Authorization: `Bearer ${token}` });
     }
-  }, []);
+  }, [getAuthHeader, saveAuthHeaders]);
 
   return (
     <>
